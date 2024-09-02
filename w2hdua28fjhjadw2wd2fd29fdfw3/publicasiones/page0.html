@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postagem - Luitter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #000;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        header {
+            width: 100%;
+            padding: 10px;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .back-button {
+            background-color: #ddd;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            color: #000;
+        }
+        .back-button:hover {
+            background-color: #ccc;
+        }
+        .post-container {
+            width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .post-container .username {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .post-container .title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .post-container .description {
+            margin-bottom: 15px;
+        }
+        .post-container img, .post-container video {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .post-container video {
+            max-height: 400px; /* Limit the height of video */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="files/luiterLOGO.png" alt="Logo">
+            Luitter
+        </div>
+        <button class="back-button" onclick="window.history.back()">Voltar</button>
+    </header>
+    <div class="post-container" id="post-container">
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            
+            const postData = {
+                username: '[DEV] Lucas Will',
+                title: 'Melhor dev que eu conheçokkk ',
+                description: 'SITE 100% ORIGINAL ;), kk brinks',
+            };
+
+            const postContainer = document.getElementById('post-container');
+            postContainer.innerHTML = `
+                <div class="username">@${postData.username}</div>
+                <div class="title">${postData.title}</div>
+                <div class="description">${postData.description}</div>
+            `;
+        });
+		
+		
+        function isDevToolsOpen() {
+            const threshold = 160; // Largura do DevTools quando aberto
+            return window.outerWidth - window.innerWidth > threshold ||
+                   window.outerHeight - window.innerHeight > threshold;
+        }
+
+        
+        function blockKeys(e) {
+            if (e.ctrlKey && (e.shiftKey && e.key === 'I') || e.key === 'U') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+
+       
+        function loadContent() {
+            if (!isDevToolsOpen()) {
+                
+            } else {
+                setTimeout(loadContent, 100); // Verificar novamente em 100ms
+            }
+        }
+
+        
+        window.onload = function() {
+            
+            document.addEventListener('keydown', blockKeys);
+            
+            
+            loadContent();
+        };
+    </script>
+</body>
+</html>

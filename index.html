@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luitterr - Bem-Vindo!</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #181718;
+            color: #fff;
+        }
+
+        #content-container {
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        
+        function isDevToolsOpen() {
+            const threshold = 160; 
+            return window.outerWidth - window.innerWidth > threshold ||
+                   window.outerHeight - window.innerHeight > threshold;
+        }
+
+        
+        function blockKeys(e) {
+            if (e.ctrlKey && (e.shiftKey && e.key === 'I') || e.key === 'U') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+
+        
+        function loadContent() {
+            if (!isDevToolsOpen()) {
+                document.getElementById('content-frame').src = 'w2hdua28fjhjadw2wd2fd29fdfw3/login.html';
+            } else {
+                setTimeout(loadContent, 100); 
+            }
+        }
+
+        
+        window.onload = function() {
+            
+            document.addEventListener('keydown', blockKeys);
+            
+            
+            loadContent();
+        };
+    </script>
+</head>
+<body>
+    <div id="content-container">
+        <iframe id="content-frame"></iframe>
+    </div>
+</body>
+</html>

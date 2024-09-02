@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luitterr - Menu</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #000;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        header {
+            width: 100%;
+            padding: 10px;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #000;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            transition: width 0.3s ease;
+            width: 200px;
+        }
+        .search-bar input {
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: #fff;
+            color: #000;
+            outline: none;
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+        .search-bar input:focus {
+            width: 300px;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .content {
+            width: 600px;
+            box-sizing: border-box;
+        }
+        .post {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none; /* Initially hidden */
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+        .post:hover {
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+        .post .username {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .post .message {
+            margin-bottom: 10px;
+        }
+        .post .timestamp {
+            font-size: 0.8em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="files/luiterLOGO.png" alt="Logo">
+            Luitterr
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar no Luitterr" maxlength="20">
+        </div>
+    </header>
+    <main>
+        <div class="content" id="content">
+            
+        </div>
+    </main>
+
+    <script>
+        const postsData = [
+            {username: 'Lucas Will', message: 'Plataforma desenvolvida, e 100% ORIGINALkkkk!', timestamp: '12 anos atrás', keywords: 'primeira mensagem'},
+            {username: 'Lucas Will', message: 'Trabalho de video da tisora, de artesss', timestamp: '234 seculos atrás', keywords: 'trabalho de artes tisora'},
+            // adicinar mais coisas aqui!
+            // ...
+        ];
+
+        let loadedPosts = 0;
+
+        function loadPosts(count) {
+            const content = document.getElementById('content');
+            for (let i = loadedPosts; i < loadedPosts + count && i < postsData.length; i++) {
+                const post = document.createElement('div');
+                post.className = 'post';
+                post.dataset.username = postsData[i].username;
+                post.dataset.keywords = postsData[i].keywords;
+                post.innerHTML = `
+                    <div class="username">@${postsData[i].username}</div>
+                    <div class="message">${postsData[i].message}</div>
+                    <div class="timestamp">${postsData[i].timestamp}</div>
+                `;
+                post.addEventListener('click', () => {
+                    window.location.href = `publicasiones/page${i}.html`; 
+                });
+                content.appendChild(post);
+                post.style.display = 'block'; 
+            }
+            loadedPosts += count;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPosts(20); 
+
+            window.addEventListener('scroll', () => {
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+                    loadPosts(10); 
+                }
+            });
+
+            document.getElementById('search-input').addEventListener('input', function() {
+                const searchValue = this.value.toLowerCase();
+                const posts = document.querySelectorAll('.post');
+                
+                posts.forEach(post => {
+                    const username = post.dataset.username.toLowerCase();
+                    const keywords = post.dataset.keywords.toLowerCase();
+
+                    if (searchValue.startsWith('@')) {
+                        const searchUsername = searchValue.slice(1);
+                        if (username.includes(searchUsername)) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    } else if (searchValue.startsWith('#')) {
+                        const searchKeyword = searchValue.slice(1);
+                        if (keywords.includes(searchKeyword)) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    } else {
+                        if (username.includes(searchValue) || keywords.includes(searchValue)) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    }
+                });
+            });
+
+            const searchBar = document.querySelector('.search-bar input');
+            searchBar.addEventListener('focus', () => {
+                searchBar.parentNode.style.width = '300px';
+            });
+            searchBar.addEventListener('blur', () => {
+                searchBar.parentNode.style.width = '200px';
+            });
+        });
+		
+		
+        function isDevToolsOpen() {
+            const threshold = 160; // Largura do DevTools quando aberto
+            return window.outerWidth - window.innerWidth > threshold ||
+                   window.outerHeight - window.innerHeight > threshold;
+        }
+
+        
+        function blockKeys(e) {
+            if (e.ctrlKey && (e.shiftKey && e.key === 'I') || e.key === 'U') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+
+       
+        function loadContent() {
+            if (!isDevToolsOpen()) {
+                
+            } else {
+                setTimeout(loadContent, 100); 
+            }
+        }
+
+        // Configurar eventos e iniciar a verificação
+        window.onload = function() {
+            
+            document.addEventListener('keydown', blockKeys);
+            
+           
+            loadContent();
+        };
+    </script>
+</body>
+</html>
