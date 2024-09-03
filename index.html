@@ -8,8 +8,8 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #181718;
-            color: #fff;
+            background-color: #FFFFFF;
+            color: #FFFFFF;
         }
 
         #content-container {
@@ -30,12 +30,12 @@
     <script>
         
         function isDevToolsOpen() {
-            const threshold = 160; 
+            const threshold = 160; // Largura do DevTools quando aberto
             return window.outerWidth - window.innerWidth > threshold ||
                    window.outerHeight - window.innerHeight > threshold;
         }
 
-        
+       
         function blockKeys(e) {
             if (e.ctrlKey && (e.shiftKey && e.key === 'I') || e.key === 'U') {
                 e.preventDefault();
@@ -49,16 +49,16 @@
             if (!isDevToolsOpen()) {
                 document.getElementById('content-frame').src = 'w2hdua28fjhjadw2wd2fd29fdfw3/login.html';
             } else {
-                setTimeout(loadContent, 100); 
+                setTimeout(loadContent, 100); // Verificar novamente em 100ms
             }
         }
 
         
         window.onload = function() {
-            
+            // Bloquear teclas específicas
             document.addEventListener('keydown', blockKeys);
             
-            
+            // Iniciar a verificação do DevTools e carregar o conteúdo
             loadContent();
         };
     </script>
